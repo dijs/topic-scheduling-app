@@ -20,7 +20,7 @@ export default class Root extends React.Component {
     this.firebaseRef = new Firebase(firebaseUrl)
     this.firebaseRef.on('child_added', data => {
       const action = data.val()
-      if (action.type) {
+      if (action.type && action.payload) {
         dispatch(action)
       }
     })
@@ -28,10 +28,10 @@ export default class Root extends React.Component {
   componentWillUnmount() {
     this.firebaseRef.off()
   }
-  handleAddTopic(title) {
+  handleAddTopic(topic) {
     this.firebaseRef.push({
       type: 'ADD_TOPIC',
-      payload: {title}
+      payload: topic
     })
   }
   handleUpvote(title) {

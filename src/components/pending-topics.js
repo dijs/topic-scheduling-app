@@ -3,10 +3,11 @@ import Topic from './pending-topic'
 
 export default function PendingTopics({topics, upvote, downvote, remove}) {
 
-  function renderTopic({title, score}, index) {
+  function renderTopic({title, duration, score}, index) {
     return <Topic
       title={title}
       score={score}
+      duration={duration}
       upvote={upvote}
       downvote={downvote}
       key={index}

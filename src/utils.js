@@ -16,13 +16,17 @@ export function getThursdays(topics) {
   let next = nextThursday()
   let daysAhead = 0
   let thursdays = []
+  let minutes = 0
   topics.forEach(topic => {
     var current = moment(next).add(daysAhead, 'days')
     var date = current.format('MMMM Do YYYY')
-    if (current.date() < 7) {
+    const isStaffOverview = current.date() < 7
+    const {title, duration} = topic
+    if (isStaffOverview) {
       thursdays.push({
         title: 'Staff Overview (Mandatory)',
-        isStaffOverview: true,
+        duration: 60,
+        isStaffOverview,
         date
       })
       daysAhead += daysInWeek
@@ -30,17 +34,15 @@ export function getThursdays(topics) {
       date = current.format('MMMM Do YYYY')
     }
     thursdays.push({
-      title: topic.title,
+      title,
+      duration,
       date
     })
-    daysAhead += daysInWeek
+    minutes += topic.duration
+    if (minutes >= 60) {
+      minutes = 0
+      daysAhead += daysInWeek
+    }
   })
   return thursdays
-}
-
-export function sort (array, fromIndex, toIndex) {
-  const temp = array[fromIndex]
-  const without = array.filter((e, index) => index !== fromIndex)
-  without.splice(toIndex, 0, temp)
-  return without
 }

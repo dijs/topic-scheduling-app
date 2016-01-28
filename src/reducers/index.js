@@ -13,9 +13,10 @@ const scoreDescending = topic => -topic.get('score')
 
 const reducer = handleActions({
   [ADD_TOPIC]: (topics, action) => {
-    const {title} = action.payload
+    const {title, duration} = action.payload
     const topic = Map({
       score: 0,
+      duration,
       title
     })
     const pending = topics.get('pending')

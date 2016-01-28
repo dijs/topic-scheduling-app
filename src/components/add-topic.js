@@ -1,5 +1,7 @@
 import React from 'react'
 
+const {max, min} = Math
+
 export default class AddTopicForm extends React.Component {
   constructor(props) {
     super(props)
@@ -9,6 +11,8 @@ export default class AddTopicForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleAddTopic = this.handleAddTopic.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
+    this.handleDurationChange = this.handleDurationChange.bind(this)
+    this.handleDurationBlur = this.handleDurationBlur.bind(this)
   }
   handleChange(e) {
     this.setState({
@@ -16,9 +20,14 @@ export default class AddTopicForm extends React.Component {
     })
   }
   handleAddTopic() {
-    this.props.addTopic(this.state.title)
+    const {title, duration} = this.state
+    this.props.addTopic({
+      title,
+      duration
+    })
     this.setState({
-      title: ''
+      title: '',
+      duration: ''
     })
   }
   handleKeyDown(e) {
@@ -26,12 +35,23 @@ export default class AddTopicForm extends React.Component {
       this.handleAddTopic()
     }
   }
+  handleDurationBlur(e) {
+    const n = parseInt(this.state.duration, 10)
+    // TODO: Put this logic in reducer
+    this.setState({
+      duration: max(min(n, 60), 10)
+    })
+  }
+  handleDurationChange(e) {
+    this.setState({
+      duration: e.target.value
+    })
+  }
   render() {
     const {addTopic} = this.props
-    const {title} = this.state
+    const {title, duration} = this.state
     return <form className='form-inline' action='#'>
       <div className='form-group'>
-        <label className='sr-only'>Title</label>
         <input
           type='text'
           className='form-control'
@@ -39,6 +59,17 @@ export default class AddTopicForm extends React.Component {
           onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
           placeholder='Title' />
+      </div>
+      &nbsp;
+      <div className='form-group'>
+        <input
+          type='text'
+          onChange={this.handleDurationChange}
+          onBlur={this.handleDurationBlur}
+          value={duration}
+          style={{width:'70px'}}
+          className='form-control'
+          placeholder='mins' />
       </div>
       &nbsp;
       <button
