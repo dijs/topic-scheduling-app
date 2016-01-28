@@ -40,14 +40,16 @@ function sourceCollect(connect, monitor) {
 
 class ScheduledTopic extends React.Component {
   render() {
-    const {isDragging, connectDragSource, connectDropTarget, title, date, index, isStaffOverview} = this.props
+    const {isDragging, connectDragSource, connectDropTarget, title, date, index, isStaffOverview, remove} = this.props
     const style = {
       cursor: isStaffOverview ? '' : 'move',
       opacity: isDragging ? 0.5 : 1
     }
+    const removeButton = <span className='pull-right fa fa-trash' onClick={() => remove(title)}></span>
     const item = <div className='list-group-item' style={style}>
+      {isStaffOverview ? '' : removeButton}
       <span>{title}</span>
-      <time className='pull-right'>{date}</time>
+      <time className='pull-right'>{date}&nbsp;&nbsp;</time>
     </div>
     if (isStaffOverview) {
       return item

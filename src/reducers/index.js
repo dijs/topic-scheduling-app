@@ -1,6 +1,6 @@
 import {handleActions} from 'redux-actions'
 import {Map, OrderedMap, List} from 'immutable'
-import {ADD_TOPIC, UPVOTE_TOPIC, DOWNVOTE_TOPIC, MOVE_TOPIC} from '../actions'
+import {ADD_TOPIC, UPVOTE_TOPIC, DOWNVOTE_TOPIC, MOVE_TOPIC, REMOVE_TOPIC} from '../actions'
 
 const initialTopics = new Map({
   pending: new OrderedMap(),
@@ -52,6 +52,22 @@ const reducer = handleActions({
     list.splice(targetIndex, 0, sourceTopic)
     const items = list.map(item => new Map(item))
     return topics.set('scheduled', new List(items))
+  },
+  [REMOVE_TOPIC]: (topics, action) => {
+    const {title} = action.payload
+    if (topics.get('pending').has(title)) {
+      const updatedPending = topics.get('pending')
+        .delete(title)
+        .sortBy(scoreDescending)
+      return topics.set('pending', updatedPending)
+    }
+    const index = topics.get('scheduled')
+      .findIndex(topic => topic.get('title') === title)
+    if (index !== -1) {
+      const updatedScheduled = topics.get('scheduled').delete(index)
+      return topics.set('scheduled', updatedScheduled)
+    }
+    return topics
   }
 }, initialTopics)
 

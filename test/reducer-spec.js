@@ -1,6 +1,6 @@
 import 'should'
 import reducer from '../src/reducers'
-import {ADD_TOPIC, UPVOTE_TOPIC, DOWNVOTE_TOPIC, MOVE_TOPIC} from '../src/actions'
+import {ADD_TOPIC, UPVOTE_TOPIC, DOWNVOTE_TOPIC, MOVE_TOPIC, REMOVE_TOPIC} from '../src/actions'
 
 describe('Reducers', () => {
 
@@ -161,6 +161,36 @@ describe('Reducers', () => {
     state.get('scheduled').get(0).get('title').should.equal('second')
     state.get('scheduled').get(1).get('title').should.equal('third')
     state.get('scheduled').get(2).get('title').should.equal('first')
+  })
+
+  it('should remove topic in pending', () => {
+    let state = reducer(undefined, {
+      type: ADD_TOPIC,
+      payload: {title: 'test'}
+    })
+    state = reducer(state, {
+      type: REMOVE_TOPIC,
+      payload: {title: 'test'}
+    })
+    state.get('pending').size.should.equal(0)
+  })
+
+  it('should remove topic in scheduled', () => {
+    let state = reducer(undefined, {
+      type: ADD_TOPIC,
+      payload: {title: 'test'}
+    })
+    for(var i = 0; i < 7; i++) {
+      state = reducer(state, {
+        type: UPVOTE_TOPIC,
+        payload: {title: 'test'}
+      })
+    }
+    state = reducer(state, {
+      type: REMOVE_TOPIC,
+      payload: {title: 'test'}
+    })
+    state.get('scheduled').size.should.equal(0)
   })
 
 })

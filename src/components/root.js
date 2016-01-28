@@ -13,6 +13,7 @@ export default class Root extends React.Component {
     this.handleUpvote = this.handleUpvote.bind(this)
     this.handleDownvote = this.handleDownvote.bind(this)
     this.handleMoveTopic = this.handleMoveTopic.bind(this)
+    this.handleRemove = this.handleRemove.bind(this)
   }
   componentWillMount() {
     const {dispatch} = this.props
@@ -51,6 +52,12 @@ export default class Root extends React.Component {
       payload: data
     })
   }
+  handleRemove(title) {
+    this.firebaseRef.push({
+      type: 'REMOVE_TOPIC',
+      payload: {title}
+    })
+  }
   render() {
     const {pending, scheduled} = this.props
     return <div className='container'>
@@ -60,11 +67,15 @@ export default class Root extends React.Component {
           <PendingTopics
             topics={pending}
             upvote={this.handleUpvote}
+            remove={this.handleRemove}
             downvote={this.handleDownvote} />
           <AddTopicForm addTopic={this.handleAddTopic} />
         </div>
         <div className='col-md-6'>
-          <ScheduledTopics topics={scheduled} moveTopic={this.handleMoveTopic} />
+          <ScheduledTopics
+            topics={scheduled}
+            moveTopic={this.handleMoveTopic}
+            remove={this.handleRemove} />
         </div>
       </div>
     </div>

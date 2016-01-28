@@ -8,12 +8,12 @@ import ScheduledTopic from './scheduled-topic'
 
 class ScheduledTopics extends React.Component {
   render() {
-    const {topics, connectDropTarget, moveTopic} = this.props
+    const {topics, connectDropTarget, moveTopic, remove} = this.props
 
     const reviewedTopics = getThursdays(topics)
 
     function renderTopic(topic, index) {
-      return <ScheduledTopic {...topic} key={index} moveTopic={moveTopic} />
+      return <ScheduledTopic {...topic} key={index} moveTopic={moveTopic} remove={remove} />
     }
 
     return <div>
