@@ -29,7 +29,6 @@ describe('utils', () => {
       duration: 60
     }]
     const schedule = getThursdays(topics)
-    schedule.length.should.equal(5)
     schedule[0].title.should.startWith('Staff')
     schedule[0].date.toString().should.startWith('January 1st')
     schedule[1].title.should.startWith('first')
@@ -60,7 +59,6 @@ describe('utils', () => {
       duration: 30
     }]
     const schedule = getThursdays(topics)
-    schedule.length.should.equal(7)
     schedule[0].title.should.startWith('Staff')
     schedule[0].date.toString().should.startWith('January 1st')
     schedule[1].title.should.startWith('first')
