@@ -1,6 +1,6 @@
 import 'should'
 import reducer from '../src/reducers'
-import {ADD_TOPIC, UPVOTE_TOPIC, DOWNVOTE_TOPIC, MOVE_TOPIC, REMOVE_TOPIC} from '../src/actions'
+import {ADD_TOPIC, UPVOTE_TOPIC, MOVE_TOPIC, REMOVE_TOPIC} from '../src/actions'
 
 describe('Reducers', () => {
 
@@ -52,22 +52,6 @@ describe('Reducers', () => {
     state.get('pending').valueSeq().get(0).get('score').should.equal(2)
     state.get('pending').valueSeq().get(0).get('title').should.equal('first')
     state.get('pending').valueSeq().get(1).get('score').should.equal(1)
-  })
-
-  it('should downvote topic in pending', () => {
-    let state = reducer(undefined, {
-      type: ADD_TOPIC,
-      payload: {title: 'test'}
-    })
-    state = reducer(state, {
-      type: UPVOTE_TOPIC,
-      payload: {title: 'test'}
-    })
-    state = reducer(state, {
-      type: DOWNVOTE_TOPIC,
-      payload: {title: 'test'}
-    })
-    state.get('pending').get('test').get('score').should.equal(0)
   })
 
   it('should move topic from pending to scheduled', () => {

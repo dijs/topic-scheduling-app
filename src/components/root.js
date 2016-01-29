@@ -11,7 +11,6 @@ export default class Root extends React.Component {
     super(props)
     this.handleAddTopic = this.handleAddTopic.bind(this)
     this.handleUpvote = this.handleUpvote.bind(this)
-    this.handleDownvote = this.handleDownvote.bind(this)
     this.handleMoveTopic = this.handleMoveTopic.bind(this)
     this.handleRemove = this.handleRemove.bind(this)
   }
@@ -40,12 +39,6 @@ export default class Root extends React.Component {
       payload: {title}
     })
   }
-  handleDownvote(title) {
-    this.firebaseRef.push({
-      type: 'DOWNVOTE_TOPIC',
-      payload: {title}
-    })
-  }
   handleMoveTopic(data) {
     this.firebaseRef.push({
       type: 'MOVE_TOPIC',
@@ -67,8 +60,7 @@ export default class Root extends React.Component {
           <PendingTopics
             topics={pending}
             upvote={this.handleUpvote}
-            remove={this.handleRemove}
-            downvote={this.handleDownvote} />
+            remove={this.handleRemove} />
           <AddTopicForm addTopic={this.handleAddTopic} />
         </div>
         <div className='col-md-6'>

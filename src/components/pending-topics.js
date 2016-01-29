@@ -1,7 +1,7 @@
 import React from 'react'
 import Topic from './pending-topic'
 
-export default function PendingTopics({topics, upvote, downvote, remove}) {
+export default function PendingTopics({topics, upvote, remove}) {
 
   function renderTopic({title, duration, score}, index) {
     return <Topic
@@ -9,7 +9,6 @@ export default function PendingTopics({topics, upvote, downvote, remove}) {
       score={score}
       duration={duration}
       upvote={upvote}
-      downvote={downvote}
       key={index}
       remove={remove}
     />

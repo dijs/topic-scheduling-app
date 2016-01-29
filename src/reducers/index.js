@@ -1,6 +1,6 @@
 import {handleActions} from 'redux-actions'
 import {Map, OrderedMap, List} from 'immutable'
-import {ADD_TOPIC, UPVOTE_TOPIC, DOWNVOTE_TOPIC, MOVE_TOPIC, REMOVE_TOPIC} from '../actions'
+import {ADD_TOPIC, UPVOTE_TOPIC, MOVE_TOPIC, REMOVE_TOPIC} from '../actions'
 
 const initialTopics = new Map({
   pending: new OrderedMap(),
@@ -37,12 +37,6 @@ const reducer = handleActions({
     } else {
       return topics.set('pending', topics.get('pending').set(title, updatedTopic).sortBy(scoreDescending))
     }
-  },
-  [DOWNVOTE_TOPIC]: (topics, action) => {
-    const {title} = action.payload
-    const topic = topics.get('pending').get(title)
-    const updatedTopic = topic.set('score', topic.get('score') - 1)
-    return topics.set('pending', topics.get('pending').set(title, updatedTopic).sortBy(scoreDescending))
   },
   [MOVE_TOPIC]: (topics, action) => {
     const {source, target} = action.payload
