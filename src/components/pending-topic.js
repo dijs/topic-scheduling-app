@@ -1,5 +1,6 @@
 import React from 'react'
 import RemoveModal from './remove-modal'
+import Vote from './vote'
 
 export default class Topic extends React.Component {
   render() {
@@ -13,7 +14,7 @@ export default class Topic extends React.Component {
       <span>{title}&nbsp;</span>
       <small>({duration} mins)</small>
       <span className='pull-right fa fa-trash' onClick={handleOpenModal}></span>
-      <span className='vote pull-right fa fa-thumbs-up' onClick={() => upvote(title)}>&nbsp;&nbsp;</span>
+      <span className='pull-right'><Vote title={title} upvote={upvote} /></span>
       <span className='pull-right'>{score} votes&nbsp;&nbsp;&nbsp;</span>
     </div>
   }
