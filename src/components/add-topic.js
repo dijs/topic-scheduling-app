@@ -27,7 +27,7 @@ export default class AddTopicForm extends React.Component {
     })
     this.setState({
       title: '',
-      duration: ''
+      duration: '0'
     })
   }
   handleKeyDown(e) {
@@ -67,6 +67,7 @@ export default class AddTopicForm extends React.Component {
           onChange={this.handleDurationChange}
           onBlur={this.handleDurationBlur}
           value={duration}
+          onKeyDown={this.handleKeyDown}
           style={{width:'70px'}}
           className='form-control'
           placeholder='mins' />

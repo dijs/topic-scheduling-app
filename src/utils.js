@@ -12,37 +12,56 @@ function nextThursday() {
   }
 }
 
+function createStaffTopic(date) {
+  return {
+    title: 'Staff Overview (Mandatory)',
+    duration: 60,
+    isStaffOverview: true,
+    date
+  }
+}
+
 export function getThursdays(topics) {
   let next = nextThursday()
   let daysAhead = 0
   let thursdays = []
   let minutes = 0
+
   topics.forEach(topic => {
     var current = moment(next).add(daysAhead, 'days')
     var date = current.format('MMMM Do YYYY')
-    const isStaffOverview = current.date() < 7
     const {title, duration} = topic
-    if (isStaffOverview) {
-      thursdays.push({
-        title: 'Staff Overview (Mandatory)',
-        duration: 60,
-        isStaffOverview,
-        date
-      })
+
+    if (current.date() < 7) {
+      thursdays.push(createStaffTopic(date))
+      daysAhead += daysInWeek
+      current = moment(next).add(daysAhead, 'days')
+      date = current.format('MMMM Do YYYY')
+      minutes = 0
+    }
+
+    minutes += duration
+    if (minutes > 60) {
+      minutes = duration
       daysAhead += daysInWeek
       current = moment(next).add(daysAhead, 'days')
       date = current.format('MMMM Do YYYY')
     }
+
+    if (current.date() < 7) {
+      thursdays.push(createStaffTopic(date))
+      daysAhead += daysInWeek
+      current = moment(next).add(daysAhead, 'days')
+      date = current.format('MMMM Do YYYY')
+      minutes = 0
+    }
+
     thursdays.push({
       title,
       duration,
       date
     })
-    minutes += topic.duration
-    if (minutes >= 60) {
-      minutes = 0
-      daysAhead += daysInWeek
-    }
+
   })
   return thursdays
 }
