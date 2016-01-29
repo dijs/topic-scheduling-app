@@ -5,14 +5,13 @@ const {max, min} = Math
 export default class AddTopicForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      title: ''
-    }
+    this.state = {}
     this.handleChange = this.handleChange.bind(this)
     this.handleAddTopic = this.handleAddTopic.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.handleDurationChange = this.handleDurationChange.bind(this)
     this.handleDurationBlur = this.handleDurationBlur.bind(this)
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
   }
   handleChange(e) {
     this.setState({
@@ -20,13 +19,15 @@ export default class AddTopicForm extends React.Component {
     })
   }
   handleAddTopic() {
-    const {title, duration} = this.state
+    const {title, duration, description} = this.state
     this.props.addTopic({
       title,
-      duration
+      duration,
+      description
     })
     this.setState({
       title: '',
+      description: '',
       duration: '0'
     })
   }
@@ -37,7 +38,6 @@ export default class AddTopicForm extends React.Component {
   }
   handleDurationBlur(e) {
     const n = parseInt(this.state.duration, 10)
-    // TODO: Put this logic in reducer
     this.setState({
       duration: max(min(n, 60), 10)
     })
@@ -47,9 +47,19 @@ export default class AddTopicForm extends React.Component {
       duration: e.target.value
     })
   }
+  handleDescriptionChange(e) {
+    this.setState({
+      description: e.target.value
+    })
+  }
   render() {
     const {addTopic} = this.props
-    const {title, duration} = this.state
+    const {title, duration, description} = this.state
+    const descriptionStyles = {
+      margin: '10px 0',
+      width: '100%',
+      height: '150px'
+    }
     return <form className='form-inline' action='#'>
       <div className='form-group'>
         <input
@@ -60,7 +70,7 @@ export default class AddTopicForm extends React.Component {
           onKeyDown={this.handleKeyDown}
           placeholder='Title' />
       </div>
-      &nbsp;
+      &nbsp;&nbsp;
       <div className='form-group'>
         <input
           type='text'
@@ -72,7 +82,15 @@ export default class AddTopicForm extends React.Component {
           className='form-control'
           placeholder='mins' />
       </div>
-      &nbsp;
+      <br />
+      <textarea
+        style={descriptionStyles}
+        className='form-control'
+        name='description'
+        onChange={this.handleDescriptionChange}
+        value={description}
+        placeholder='This is a description.' />
+      <br />
       <button
         type='button'
         className='btn btn-default'
