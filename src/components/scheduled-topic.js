@@ -2,6 +2,7 @@ import React from 'react'
 import {DragSource} from 'react-dnd'
 import {DropTarget} from 'react-dnd'
 import {flow} from 'lodash'
+import RemoveModal from './remove-modal'
 
 function usingTitle({title}) {
   return {title}
@@ -46,8 +47,13 @@ class ScheduledTopic extends React.Component {
       cursor: isStaffOverview ? '' : 'move',
       opacity: isDragging ? 0.5 : 1
     }
-    const removeButton = <span className='pull-right fa fa-trash' onClick={() => remove(title)}></span>
+    const handleOpenModal = () => {
+      const {removeModal} = this.refs
+      removeModal.open()
+    }
+    const removeButton = <span className='pull-right fa fa-trash' onClick={handleOpenModal} />
     const item = <div className='list-group-item' style={style}>
+      <RemoveModal title={title} remove={remove} ref='removeModal' />
       {isStaffOverview ? '' : removeButton}
       <span>{title}&nbsp;</span>
       <small>({duration} mins)</small>
