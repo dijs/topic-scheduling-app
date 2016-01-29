@@ -75,4 +75,32 @@ describe('utils', () => {
     schedule[6].date.toString().should.startWith('February 12th')
   })
 
+  it('should create schedule v3', () => {
+    const topics = [{
+      title: 'first',
+      duration: 20
+    },{
+      title: 'second',
+      duration: 16
+    },{
+      title: 'third',
+      duration: 40
+    },{
+      title: 'fourth',
+      duration: 45
+    }]
+    clock.tick(1000 * 60 * 60 * 24 * 29)
+    const schedule = getThursdays(topics)
+    schedule[0].title.should.startWith('Staff')
+    schedule[0].date.toString().should.startWith('February 5th')
+    schedule[1].title.should.startWith('first')
+    schedule[1].date.toString().should.startWith('February 12th')
+    schedule[2].title.should.startWith('second')
+    schedule[2].date.toString().should.startWith('February 12th')
+    schedule[3].title.should.startWith('third')
+    schedule[3].date.toString().should.startWith('February 19th')
+    schedule[4].title.should.startWith('fourth')
+    schedule[4].date.toString().should.startWith('February 26th')
+  })
+
 })
