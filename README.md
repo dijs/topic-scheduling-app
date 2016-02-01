@@ -5,7 +5,6 @@
 git clone git://github.com/dijs/topic-scheduling-app
 cd topic-scheduling-app
 npm install
-npm run build
 ```
 
 ### How to configure
@@ -13,8 +12,10 @@ npm run build
 export FIREBASE_URL=<a firebase url>
 export PORT=<port>
 ```
+or create a `.env` with those variables
 
-### How to run
+### How to build and run
 ```sh
+npm run build
 npm start
 ```
