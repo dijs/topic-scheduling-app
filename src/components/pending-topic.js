@@ -5,7 +5,7 @@ import DescriptionModal from './description-modal'
 
 export default class Topic extends React.Component {
   render() {
-    const {title, description, duration, score = 0, upvote, remove} = this.props
+    const {title, description, duration, score = 0, upvote, edit, remove} = this.props
     const handleOpenModal = () => {
       const {removeModal} = this.refs
       removeModal.open()
@@ -20,6 +20,7 @@ export default class Topic extends React.Component {
       <small>({duration} mins)</small>
       <span className='pull-right fa fa-trash' onClick={handleOpenModal}></span>
       <span className='pull-right fa fa-info' onClick={handleOpenDescription}>&nbsp;&nbsp;</span>
+      <span className='pull-right fa fa-pencil' onClick={() => edit(title)}>&nbsp;&nbsp;</span>
       <span className='pull-right'><Vote title={title} upvote={upvote} /></span>
       <span className='pull-right'>{score} votes&nbsp;&nbsp;&nbsp;</span>
     </div>

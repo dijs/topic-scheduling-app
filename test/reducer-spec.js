@@ -1,6 +1,6 @@
 import 'should'
 import reducer from '../src/reducers'
-import {ADD_TOPIC, UPVOTE_TOPIC, MOVE_TOPIC, REMOVE_TOPIC} from '../src/actions'
+import {ADD_TOPIC, UPVOTE_TOPIC, MOVE_TOPIC, REMOVE_TOPIC, EDIT_TOPIC} from '../src/actions'
 
 describe('Reducers', () => {
 
@@ -175,6 +175,19 @@ describe('Reducers', () => {
       payload: {title: 'test'}
     })
     state.get('scheduled').size.should.equal(0)
+  })
+
+  it('should edit topic in pending', () => {
+    let state = reducer(undefined, {
+      type: ADD_TOPIC,
+      payload: {title: 'test', description: 'hello'}
+    })
+    state = reducer(state, {
+      type: EDIT_TOPIC,
+      payload: {title: 'test', topic: {title: 'test 2', description: 'hello'}}
+    })
+    state.get('pending').get('test 2').get('description').should.equal('hello')
+    state.get('pending').has('test').should.be.false()
   })
 
 })

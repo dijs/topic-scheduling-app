@@ -19,7 +19,7 @@ export default class DescriptionModal extends React.Component {
       modal.close()
     }
     const __html = markdown.toHTML(description || '')
-    const body = <p dangerouslySetInnerHTML={{__html}} />
+    const body = <p dangerouslySetInnerHTML={{__html}}></p>
     const footer = <div>
       <button type='button' className='btn btn-default' onClick={handleClose}>Close</button>
     </div>
