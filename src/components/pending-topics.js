@@ -1,10 +1,10 @@
 import React from 'react'
-import Topic from './pending-topic'
+import PendingTopic from './pending-topic'
 
 export default function PendingTopics({topics, upvote, remove, edit}) {
 
   function renderTopic({title, description, duration, score}, index) {
-    return <Topic
+    return <PendingTopic
       title={title}
       score={score}
       description={description}

@@ -69,13 +69,15 @@ export default class Root extends React.Component {
     })
   }
   handleEdit(title) {
-    const {pending} = this.props
-    const topic = find(pending, topic => topic.title === title)
+    const {pending, scheduled} = this.props
+    const pendingTopic = find(pending, topic => topic.title === title)
+    const scheduledTopic = find(scheduled, topic => topic.title === title)
+    const topic = pendingTopic || scheduledTopic
     if (topic) {
       this.refs.topicForm.setTopic(topic)
       this.setState({
         editing: true,
-        title: topic.title
+        title
       })
     }
   }
@@ -113,6 +115,7 @@ export default class Root extends React.Component {
           <ScheduledTopics
             topics={scheduled}
             moveTopic={this.handleMoveTopic}
+            edit={this.handleEdit}
             remove={this.handleRemove} />
         </div>
       </div>

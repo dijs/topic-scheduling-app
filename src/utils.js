@@ -30,7 +30,7 @@ export function getThursdays(topics) {
   topics.forEach(topic => {
     var current = moment(next).add(daysAhead, 'days')
     var date = current.format('MMMM Do YYYY')
-    const {title, duration} = topic
+    const {title, duration, description} = topic
 
     if (current.date() < 7) {
       thursdays.push(createStaffTopic(date))
@@ -59,7 +59,8 @@ export function getThursdays(topics) {
     thursdays.push({
       title,
       duration,
-      date
+      date,
+      description
     })
 
   })

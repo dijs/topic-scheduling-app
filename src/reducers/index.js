@@ -75,7 +75,15 @@ const reducer = handleActions({
         .set(topic.title, originalTopic.merge(topic))
       return topics.set('pending', updatedPending)
     } else {
-      return topics
+      const scheduled = topics.get('scheduled')
+      const index = topics.get('scheduled').findIndex(topic => topic.get('title') === title)
+      if (index > -1) {
+        const originalTopic = scheduled.get(index)
+        const updatedScheduled = scheduled.set(index, originalTopic.merge(topic))
+        return topics.set('scheduled', updatedScheduled)
+      } else {
+        return topics
+      }
     }
   },
 }, initialTopics)

@@ -1,12 +1,10 @@
 import React from 'react'
 import {DragSource} from 'react-dnd'
 import {DropTarget} from 'react-dnd'
-import {flow} from 'lodash'
-import RemoveModal from './remove-modal'
+import flow from 'lodash/flow'
+import Topic from './topic'
 
-function usingTitle({title}) {
-  return {title}
-}
+const usingTitle = ({title}) => {title}
 
 var topicTarget = {
   drop: usingTitle
@@ -39,31 +37,21 @@ function sourceCollect(connect, monitor) {
   }
 }
 
-class ScheduledTopic extends React.Component {
-  render() {
-    const {isDragging, connectDragSource, connectDropTarget, title,
-      duration = 0, date, index, isStaffOverview, remove} = this.props
-    const style = {
-      cursor: isStaffOverview ? '' : 'move',
-      opacity: isDragging ? 0.5 : 1
-    }
-    const handleOpenModal = () => {
-      const {removeModal} = this.refs
-      removeModal.open()
-    }
-    const removeButton = <span className='pull-right fa fa-trash' onClick={handleOpenModal} />
-    const item = <div className='list-group-item' style={style}>
-      <RemoveModal title={title} remove={remove} ref='removeModal' />
-      {isStaffOverview ? '' : removeButton}
-      <span>{title}&nbsp;</span>
-      <small>({duration} mins)</small>
-      <time className='pull-right'>{date}&nbsp;&nbsp;</time>
-    </div>
-    if (isStaffOverview) {
-      return item
-    }
-    return connectDropTarget(connectDragSource(item))
+function ScheduledTopic (props) {
+  const {isDragging, connectDragSource, connectDropTarget, date, isStaffOverview} = props
+  const style = {
+    cursor: isStaffOverview ? '' : 'move',
+    opacity: isDragging ? 0.5 : 1
   }
+  const text = <time>{date}&nbsp;&nbsp;</time>
+  const topic = <Topic {...props}
+    isStaffOverview={isStaffOverview}
+    text={text} />
+  const item = <div className='list-group-item' style={style}>{topic}</div>
+  if (isStaffOverview) {
+    return item
+  }
+  return connectDropTarget(connectDragSource(item))
 }
 
 const target = DropTarget('TOPIC', topicTarget, targetCollect)

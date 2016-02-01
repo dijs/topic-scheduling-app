@@ -192,4 +192,26 @@ describe('Reducers', () => {
     state.get('pending').has('test').should.be.false()
   })
 
+  it('should edit topic in scheduled', () => {
+    let state = reducer(undefined, {
+      type: ADD_TOPIC,
+      payload: {title: 'test', description: 'hello'}
+    })
+    for(var i = 0; i < 7; i++) {
+      state = reducer(state, {
+        type: UPVOTE_TOPIC,
+        payload: {title: 'test'}
+      })
+    }
+    state = reducer(state, {
+      type: EDIT_TOPIC,
+      payload: {title: 'test', topic: {title: 'test 2', description: 'hello'}}
+    })
+    state.get('scheduled').size.should.equal(1)
+    const topic = state.get('scheduled').get(0)
+    topic.get('title').should.equal('test 2')
+    topic.get('description').should.equal('hello')
+    topic.get('score').should.equal(7)
+  })
+
 })
