@@ -11,6 +11,7 @@ export default class TopicForm extends React.Component {
     this.handleDurationChange = this.handleDurationChange.bind(this)
     this.handleDurationBlur = this.handleDurationBlur.bind(this)
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
     this.setTopic = this.setTopic.bind(this)
   }
   setTopic(topic) {
@@ -52,14 +53,27 @@ export default class TopicForm extends React.Component {
       duration: '0'
     })
   }
+  handleCancel() {
+    const {cancel} = this.props
+    cancel()
+    this.setState({
+      title: '',
+      description: '',
+      duration: '0'
+    })
+  }
   render() {
-    const {actionLabel} = this.props
+    const {actionLabel, handleCancel} = this.props
     const {title, duration, description} = this.state
     const descriptionStyles = {
       margin: '10px 0',
       width: '100%',
       height: '150px'
     }
+    const cancelButton = <button
+      type='button'
+      className='btn btn-default'
+      onClick={this.handleCancel}>Cancel</button>
     return <form className='form-inline' action='#'>
       <div className='form-group'>
         <input
@@ -95,6 +109,8 @@ export default class TopicForm extends React.Component {
         type='button'
         className='btn btn-default'
         onClick={this.handleAction}>{actionLabel}</button>
+      &nbsp;
+      {actionLabel === 'Save' ? cancelButton : ''}
     </form>
   }
 }

@@ -16,9 +16,10 @@ export default class Root extends React.Component {
     this.handleRemove = this.handleRemove.bind(this)
     this.handleEdit = this.handleEdit.bind(this)
     this.handleEditTopic = this.handleEditTopic.bind(this)
+    this.cancel = this.cancel.bind(this)
     this.state = {
       editing: false,
-      title: ''
+      title: undefined
     }
   }
   componentWillMount() {
@@ -78,6 +79,12 @@ export default class Root extends React.Component {
       })
     }
   }
+  cancel() {
+    this.setState({
+      editing: false,
+      title: undefined
+    })
+  }
   render() {
     const {pending, scheduled} = this.props
     const {editing, title} = this.state
@@ -87,6 +94,7 @@ export default class Root extends React.Component {
 
     const topicForm = <TopicForm
       ref='topicForm'
+      cancel={this.cancel}
       action={editing ? editAction : addAction}
       actionLabel={editing ? 'Save' : 'Add'} />
 
