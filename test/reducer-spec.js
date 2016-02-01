@@ -186,7 +186,9 @@ describe('Reducers', () => {
       type: EDIT_TOPIC,
       payload: {title: 'test', topic: {title: 'test 2', description: 'hello'}}
     })
-    state.get('pending').get('test 2').get('description').should.equal('hello')
+    const topic = state.get('pending').get('test 2')
+    topic.get('description').should.equal('hello')
+    topic.get('score').should.equal(0)
     state.get('pending').has('test').should.be.false()
   })
 

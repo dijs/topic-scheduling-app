@@ -69,9 +69,10 @@ const reducer = handleActions({
     const {title, topic} = action.payload
     const pending = topics.get('pending')
     if (pending.has(title)) {
+      const originalTopic = pending.get(title)
       const updatedPending = pending
         .delete(title)
-        .set(topic.title, new Map(topic))
+        .set(topic.title, originalTopic.merge(topic))
       return topics.set('pending', updatedPending)
     } else {
       return topics
