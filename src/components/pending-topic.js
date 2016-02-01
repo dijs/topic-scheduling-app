@@ -5,7 +5,7 @@ import DescriptionModal from './description-modal'
 
 export default class Topic extends React.Component {
   render() {
-    const {title, description, duration, score = 0, upvote, edit, remove} = this.props
+    const {title, description, duration, score, upvote, edit, remove} = this.props
     const handleOpenModal = () => {
       const {removeModal} = this.refs
       removeModal.open()
