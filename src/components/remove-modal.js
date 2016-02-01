@@ -20,10 +20,9 @@ export default class RemoveModal extends React.Component {
   }
   render() {
     const {title, remove} = this.props
-    const {removeModal} = this.refs
     const footer = <div>
       <button type='button' className='btn btn-default'
-        onClick={() => removeModal.close()}>Cancel</button>
+        onClick={() => this.refs.removeModal.close()}>Cancel</button>
       <button type='button' className='btn btn-danger'
         onClick={this.handleRemove}>Remove</button>
     </div>
