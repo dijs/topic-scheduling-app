@@ -1,6 +1,9 @@
 import React from 'react'
+import trunc from 'trunc-text'
 import RemoveModal from './remove-modal'
 import DescriptionModal from './description-modal'
+
+const MAX_TITLE_CHARACTERS = 55
 
 export default class Topic extends React.Component {
   render() {
@@ -19,7 +22,7 @@ export default class Topic extends React.Component {
     </span>
 
     return <div>
-      <span>{title}&nbsp;</span>
+      <span>{trunc(title, MAX_TITLE_CHARACTERS)}&nbsp;</span>
       <small>({duration} mins)</small>
       <div className='pull-right'>
         {text}
