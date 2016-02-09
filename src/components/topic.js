@@ -22,12 +22,12 @@ export default class Topic extends React.Component {
     </span>
 
     return <div className='row'>
-      <div className='col-md-7 col-lg-8'>
+      <div className='col-md-7'>
         <span>{trunc(title, MAX_TITLE_CHARACTERS)}&nbsp;</span>
         <small>({duration} mins)</small>
       </div>
       <br className='visible-xs visible-sm' />
-      <div className='col-md-5 col-lg-4'>
+      <div className='col-md-5'>
         {text}
         {controls}
         {isStaffOverview ? '' : defaultControls}
