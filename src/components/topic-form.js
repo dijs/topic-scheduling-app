@@ -116,7 +116,7 @@ export default class TopicForm extends React.Component {
           onKeyDown={this.handleKeyDown}
           placeholder='Title' />
       </div>
-      &nbsp;&nbsp;
+      <span className='hidden-xs'>&nbsp;&nbsp;</span>
       <div className={durationClasses}>
         <input
           type='text'
@@ -128,7 +128,7 @@ export default class TopicForm extends React.Component {
           className='form-control'
           placeholder='mins' />
       </div>
-      <br />
+      <br className='hidden-xs' />
       <div className={descriptionClasses}>
         <textarea
           style={descriptionStyles}
@@ -138,7 +138,7 @@ export default class TopicForm extends React.Component {
           value={description}
           placeholder='This is a description.' />
       </div>
-      <br />
+      <br className='hidden-xs' />
       <button
         type='button'
         className='btn btn-default'
