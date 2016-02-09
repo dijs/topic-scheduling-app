@@ -21,10 +21,13 @@ export default class Topic extends React.Component {
       <span className='fa fa-trash' onClick={openRemoveModal}>&nbsp;&nbsp;</span>
     </span>
 
-    return <div>
-      <span>{trunc(title, MAX_TITLE_CHARACTERS)}&nbsp;</span>
-      <small>({duration} mins)</small>
-      <div className='pull-right'>
+    return <div className='row'>
+      <div className='col-md-7 col-lg-8'>
+        <span>{trunc(title, MAX_TITLE_CHARACTERS)}&nbsp;</span>
+        <small>({duration} mins)</small>
+      </div>
+      <br className='visible-xs visible-sm' />
+      <div className='col-md-5 col-lg-4'>
         {text}
         {controls}
         {isStaffOverview ? '' : defaultControls}
