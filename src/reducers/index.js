@@ -29,6 +29,9 @@ const reducer = handleActions({
   [UPVOTE_TOPIC]: (topics, action) => {
     const {title} = action.payload
     const topic = topics.get('pending').get(title)
+    if (!topic) {
+      return topics
+    }
     const score = topic.get('score')
     const updatedTopic = topic.set('score', score + 1)
     if (updatedTopic.get('score') === VOTE_THRESHOLD) {

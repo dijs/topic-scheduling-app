@@ -227,4 +227,13 @@ describe('Reducers', () => {
     state.get('pending').get('first').get('duration').should.equal(15)
   })
 
+  it('should not blow up if upvoting topic that doesnt exist', () => {
+    (function(){
+      reducer(undefined, {
+        type: UPVOTE_TOPIC,
+        payload: {title: 'test'}
+      })
+    }).should.not.throw()
+  })
+
 })
