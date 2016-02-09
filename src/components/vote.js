@@ -1,5 +1,5 @@
 import React from 'react'
-import keyboardJS from 'keyboardJS'
+import keyboardJS from 'keyboardjs'
 
 let isAdmin = false
 const ADMIN_KEY_COMBO = 'ctrl + a'
