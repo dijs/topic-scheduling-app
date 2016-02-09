@@ -214,4 +214,17 @@ describe('Reducers', () => {
     topic.get('score').should.equal(7)
   })
 
+  it('should add defaults to topics', () => {
+    let state = reducer(undefined, {
+      type: ADD_TOPIC,
+      payload: {title: 'first'}
+    })
+    state.get('pending').get('first').get('duration').should.equal(0)
+    state = reducer(undefined, {
+      type: ADD_TOPIC,
+      payload: {title: 'first', duration: 15}
+    })
+    state.get('pending').get('first').get('duration').should.equal(15)
+  })
+
 })

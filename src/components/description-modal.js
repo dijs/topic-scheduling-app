@@ -18,7 +18,7 @@ export default class DescriptionModal extends React.Component {
       const {modal} = this.refs
       modal.close()
     }
-    const html = markdown.toHTML(description)
+    const html = markdown.toHTML(description || '')
     const markup = {__html: html}
     const body = <div dangerouslySetInnerHTML={markup} />
     const footer = <div>

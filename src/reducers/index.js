@@ -13,7 +13,7 @@ const scoreDescending = topic => -topic.get('score')
 
 const reducer = handleActions({
   [ADD_TOPIC]: (topics, action) => {
-    const {title, duration, description} = action.payload
+    const {title, duration = 0, description} = action.payload
     const topic = Map({
       score: 0,
       duration,

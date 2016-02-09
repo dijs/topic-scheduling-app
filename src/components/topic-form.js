@@ -1,4 +1,6 @@
 import React from 'react'
+import classNames from 'classnames'
+import isEmpty from 'lodash/isEmpty'
 const {max, min} = Math
 
 export default class TopicForm extends React.Component {
@@ -12,6 +14,7 @@ export default class TopicForm extends React.Component {
     this.handleDurationBlur = this.handleDurationBlur.bind(this)
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
+    this.containsErrors = this.containsErrors.bind(this)
     this.setTopic = this.setTopic.bind(this)
   }
   setTopic(topic) {
@@ -44,14 +47,27 @@ export default class TopicForm extends React.Component {
       description: e.target.value
     })
   }
+  containsErrors() {
+    const {title, description, duration} = this.state
+    return isEmpty(title) ||
+      isEmpty(description) ||
+      (!duration || duration.length === 0)
+  }
   handleAction() {
     const {action} = this.props
-    action(this.state)
-    this.setState({
-      title: '',
-      description: '',
-      duration: '0'
-    })
+    if (!this.containsErrors()) {
+      action(this.state)
+      this.setState({
+        title: '',
+        description: '',
+        duration: '0',
+        submitted: false
+      })
+    } else {
+      this.setState({
+        submitted: true
+      })
+    }
   }
   handleCancel() {
     const {cancel} = this.props
@@ -59,12 +75,13 @@ export default class TopicForm extends React.Component {
     this.setState({
       title: '',
       description: '',
-      duration: '0'
+      duration: '0',
+      submitted: false
     })
   }
   render() {
     const {actionLabel, handleCancel} = this.props
-    const {title, duration, description} = this.state
+    const {title, duration, description, submitted} = this.state
     const descriptionStyles = {
       margin: '10px 0',
       width: '100%',
@@ -74,8 +91,23 @@ export default class TopicForm extends React.Component {
       type='button'
       className='btn btn-default'
       onClick={this.handleCancel}>Cancel</button>
+
+    const titleClasses = classNames({
+      'form-group': true,
+      'has-error': submitted && isEmpty(title)
+    })
+
+    const durationClasses = classNames({
+      'form-group': true,
+      'has-error': submitted && (!duration || duration.length === 0)
+    })
+
+    const descriptionClasses = classNames({
+      'has-error': submitted && isEmpty(description)
+    })
+
     return <form className='form-inline' action='#'>
-      <div className='form-group'>
+      <div className={titleClasses}>
         <input
           type='text'
           className='form-control'
@@ -85,7 +117,7 @@ export default class TopicForm extends React.Component {
           placeholder='Title' />
       </div>
       &nbsp;&nbsp;
-      <div className='form-group'>
+      <div className={durationClasses}>
         <input
           type='text'
           onChange={this.handleDurationChange}
@@ -97,13 +129,15 @@ export default class TopicForm extends React.Component {
           placeholder='mins' />
       </div>
       <br />
-      <textarea
-        style={descriptionStyles}
-        className='form-control'
-        name='description'
-        onChange={this.handleDescriptionChange}
-        value={description}
-        placeholder='This is a description.' />
+      <div className={descriptionClasses}>
+        <textarea
+          style={descriptionStyles}
+          className='form-control'
+          name='description'
+          onChange={this.handleDescriptionChange}
+          value={description}
+          placeholder='This is a description.' />
+      </div>
       <br />
       <button
         type='button'
