@@ -2,12 +2,13 @@ import {handleActions} from 'redux-actions'
 import {Map, OrderedMap, List} from 'immutable'
 import {ADD_TOPIC, UPVOTE_TOPIC, MOVE_TOPIC, REMOVE_TOPIC, EDIT_TOPIC} from '../actions'
 
+const DEFAULT_VOTE_THRESHOLD = '7'
+const VOTE_THRESHOLD = parseInt(process.env.VOTE_THRESHOLD || DEFAULT_VOTE_THRESHOLD, 10)
+
 const initialTopics = new Map({
   pending: new OrderedMap(),
   scheduled: new List()
 })
-
-const TOPIC_SCHEDULED_VOTE_THRESHOLD = 7
 
 const scoreDescending = topic => -topic.get('score')
 
@@ -30,7 +31,7 @@ const reducer = handleActions({
     const topic = topics.get('pending').get(title)
     const score = topic.get('score')
     const updatedTopic = topic.set('score', score + 1)
-    if (updatedTopic.get('score') === TOPIC_SCHEDULED_VOTE_THRESHOLD) {
+    if (updatedTopic.get('score') === VOTE_THRESHOLD) {
       const updatedTopics = topics.set('pending', topics.get('pending')
         .delete(title)
         .sortBy(scoreDescending))

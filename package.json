@@ -30,6 +30,7 @@
     "dotenv": "^2.0.0",
     "express": "^4.13.4",
     "immutable": "^3.7.6",
+    "keyboardjs": "^2.2.0",
     "lodash": "^4.0.0",
     "markdown": "^0.5.0",
     "moment": "^2.11.1",

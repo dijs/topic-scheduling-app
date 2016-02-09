@@ -14,6 +14,7 @@ module.exports = {
   plugins: [
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
+      'process.env.VOTE_THRESHOLD': JSON.stringify(process.env.VOTE_THRESHOLD),
       'process.env.FIREBASE_URL': JSON.stringify(process.env.FIREBASE_URL)
     }),
   ],
