@@ -5,7 +5,7 @@ const daysInWeek = 7
 
 function nextThursday() {
   const today = moment().day()
-  if (today < thursday) {
+  if (today <= thursday) {
     return moment().add(thursday - today, 'days')
   } else {
     return moment().add(thursday - today + daysInWeek, 'days')
